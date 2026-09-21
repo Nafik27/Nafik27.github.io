@@ -3,95 +3,244 @@
 <head>
   <meta charset="utf-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1" />
-  <meta name="description" content="Portfolio of Muhammad Ilman Nafi, Production Group Leader and Electrical Engineering graduate." />
-  <title>Muhammad Ilman Nafi | Portfolio</title>
+  <meta name="description" content="Muhammad Ilman Nafi — Production Group Leader and Electrical Engineer experienced in copper foil manufacturing, DCS, SCADA, PLC, process optimization, safety, and team leadership." />
+  <meta name="theme-color" content="#07111f" />
+  <meta property="og:title" content="Muhammad Ilman Nafi | Production & Electrical Engineering" />
+  <meta property="og:description" content="Production Group Leader with an Electrical Engineering foundation, focused on manufacturing operations, process control, people leadership, and continuous improvement." />
+  <meta property="og:type" content="website" />
+  <title>Muhammad Ilman Nafi | Production & Electrical Engineering</title>
   <style>
-    :root{--bg:#0b1020;--card:#11182b;--text:#eef2ff;--muted:#a9b3c9;--line:#24304a;--accent:#7dd3fc;--accent2:#c4b5fd}
-    *{box-sizing:border-box} html{scroll-behavior:smooth} body{margin:0;font-family:Inter,ui-sans-serif,system-ui,-apple-system,Segoe UI,Roboto,Arial,sans-serif;background:linear-gradient(180deg,#09101f 0%,#0b1020 45%,#0a0f1b 100%);color:var(--text);line-height:1.6}
-    a{color:inherit;text-decoration:none} .wrap{width:min(1120px,92%);margin:auto}
-    nav{position:sticky;top:0;z-index:10;backdrop-filter:blur(12px);background:rgba(9,16,31,.72);border-bottom:1px solid rgba(255,255,255,.06)}
-    nav .wrap{display:flex;align-items:center;justify-content:space-between;padding:16px 0}.brand{font-weight:800;letter-spacing:.3px}.navlinks{display:flex;gap:20px;color:var(--muted);font-size:14px}
-    .hero{padding:92px 0 64px;display:grid;grid-template-columns:1.3fr .7fr;gap:40px;align-items:center}.eyebrow{color:var(--accent);font-weight:700;letter-spacing:.14em;text-transform:uppercase;font-size:13px}
-    h1{font-size:clamp(42px,7vw,78px);line-height:1.02;margin:12px 0 18px;letter-spacing:-.04em}.lead{font-size:clamp(18px,2vw,24px);color:var(--muted);max-width:760px}
-    .cta{display:flex;flex-wrap:wrap;gap:12px;margin-top:30px}.btn{display:inline-flex;align-items:center;justify-content:center;padding:12px 18px;border-radius:12px;border:1px solid var(--line);font-weight:700}.btn.primary{background:linear-gradient(135deg,var(--accent),var(--accent2));color:#07111f;border:0}
-    .profile-card{background:linear-gradient(180deg,rgba(255,255,255,.06),rgba(255,255,255,.025));border:1px solid var(--line);border-radius:24px;padding:28px}.metric{padding:18px 0;border-bottom:1px solid var(--line)}.metric:last-child{border-bottom:0}.metric b{display:block;font-size:28px}.metric span{color:var(--muted);font-size:14px}
-    section{padding:70px 0}.section-title{font-size:34px;margin:0 0 28px;letter-spacing:-.02em}.grid{display:grid;grid-template-columns:repeat(3,1fr);gap:18px}.card{background:rgba(17,24,43,.78);border:1px solid var(--line);border-radius:18px;padding:22px}.card h3{margin-top:0}.card p,.card li{color:var(--muted)}.tagrow{display:flex;flex-wrap:wrap;gap:8px}.tag{padding:7px 10px;border-radius:999px;border:1px solid var(--line);font-size:13px;color:#cbd5e1;background:rgba(255,255,255,.025)}
-    .timeline{display:grid;gap:18px}.role{padding:22px;border-left:3px solid var(--accent);background:rgba(255,255,255,.025);border-radius:0 16px 16px 0}.role h3{margin:0}.role .meta{color:var(--muted);font-size:14px;margin:4px 0 12px}
-    footer{padding:36px 0 50px;color:var(--muted);border-top:1px solid var(--line);margin-top:30px}
-    @media(max-width:800px){.hero{grid-template-columns:1fr;padding-top:64px}.grid{grid-template-columns:1fr}.navlinks{display:none}}
+    :root{
+      --bg:#07111f;--bg2:#0a1627;--card:#0e1b2f;--card2:#101f35;
+      --text:#f4f7fb;--muted:#9eabc0;--line:#223551;
+      --accent:#74d4ff;--accent2:#9b8cff;--ok:#8ce6bf;
+      --shadow:0 24px 70px rgba(0,0,0,.28)
+    }
+    *{box-sizing:border-box}
+    html{scroll-behavior:smooth}
+    body{margin:0;font-family:Inter,ui-sans-serif,system-ui,-apple-system,BlinkMacSystemFont,"Segoe UI",Roboto,Arial,sans-serif;color:var(--text);line-height:1.65;background:
+      radial-gradient(circle at 12% 8%,rgba(116,212,255,.12),transparent 32%),
+      radial-gradient(circle at 88% 18%,rgba(155,140,255,.1),transparent 28%),
+      linear-gradient(180deg,var(--bg),#08101d 58%,#060d17)}
+    a{color:inherit;text-decoration:none}
+    .wrap{width:min(1160px,92%);margin:auto}
+    .muted{color:var(--muted)}
+    .kicker{font-size:12px;letter-spacing:.16em;text-transform:uppercase;font-weight:800;color:var(--accent)}
+    nav{position:sticky;top:0;z-index:50;background:rgba(7,17,31,.76);backdrop-filter:blur(16px);border-bottom:1px solid rgba(255,255,255,.06)}
+    nav .wrap{height:68px;display:flex;align-items:center;justify-content:space-between;gap:24px}
+    .brand{font-weight:850;letter-spacing:-.02em}
+    .navlinks{display:flex;gap:24px;color:var(--muted);font-size:14px}
+    .navlinks a:hover{color:var(--text)}
+    .hero{min-height:calc(100vh - 68px);display:grid;grid-template-columns:1.18fr .82fr;gap:54px;align-items:center;padding:70px 0}
+    h1{font-size:clamp(46px,7vw,82px);line-height:.98;letter-spacing:-.055em;margin:14px 0 20px}
+    .gradient{background:linear-gradient(100deg,var(--accent),#b9c7ff 48%,var(--accent2));-webkit-background-clip:text;background-clip:text;color:transparent}
+    .lead{max-width:760px;font-size:clamp(18px,2vw,24px);color:#b7c2d3}
+    .cta{display:flex;gap:12px;flex-wrap:wrap;margin-top:30px}
+    .btn{display:inline-flex;align-items:center;gap:8px;padding:12px 17px;border:1px solid var(--line);border-radius:12px;font-weight:760;transition:.2s ease;background:rgba(255,255,255,.02)}
+    .btn:hover{transform:translateY(-2px);border-color:#3c5578;background:rgba(255,255,255,.05)}
+    .btn.primary{border:0;background:linear-gradient(135deg,var(--accent),var(--accent2));color:#07111f}
+    .hero-panel{background:linear-gradient(180deg,rgba(17,35,59,.94),rgba(11,24,42,.9));border:1px solid var(--line);border-radius:26px;padding:26px;box-shadow:var(--shadow)}
+    .status{display:inline-flex;align-items:center;gap:9px;padding:7px 10px;border:1px solid #25466a;border-radius:999px;color:#c9e8f7;font-size:12px}
+    .dot{width:8px;height:8px;border-radius:50%;background:var(--ok);box-shadow:0 0 0 5px rgba(140,230,191,.08)}
+    .statgrid{display:grid;grid-template-columns:1fr 1fr;gap:12px;margin-top:20px}
+    .stat{padding:18px;border:1px solid var(--line);border-radius:16px;background:rgba(255,255,255,.025)}
+    .stat b{display:block;font-size:25px;letter-spacing:-.03em}.stat span{font-size:13px;color:var(--muted)}
+    section{padding:78px 0;scroll-margin-top:72px}
+    .section-head{display:flex;justify-content:space-between;align-items:end;gap:20px;margin-bottom:30px}
+    h2{font-size:clamp(30px,4vw,44px);letter-spacing:-.035em;margin:5px 0 0}
+    .section-note{max-width:500px;color:var(--muted)}
+    .card{background:linear-gradient(180deg,rgba(15,30,51,.82),rgba(10,23,40,.82));border:1px solid var(--line);border-radius:20px;padding:24px}
+    .about-grid{display:grid;grid-template-columns:1.25fr .75fr;gap:18px}
+    .facts{display:grid;gap:10px}.fact{display:flex;justify-content:space-between;gap:20px;padding:12px 0;border-bottom:1px solid var(--line)}.fact:last-child{border:0}.fact span:first-child{color:var(--muted)}
+    .impact{display:grid;grid-template-columns:repeat(4,1fr);gap:14px;margin-top:18px}
+    .impact .card b{display:block;font-size:30px;line-height:1.2}.impact .card span{color:var(--muted);font-size:13px}
+    .timeline{display:grid;gap:18px}
+    .role{position:relative;padding:26px 26px 26px 30px;border-left:3px solid var(--accent);background:rgba(255,255,255,.025);border-radius:0 18px 18px 0}
+    .role h3{font-size:21px;margin:0}.meta{color:var(--muted);font-size:14px;margin:4px 0 15px}
+    .role ul{margin:0;padding-left:18px;color:#b8c4d6}.role li+li{margin-top:7px}
+    .role.current{border-left-color:var(--ok)}
+    .grid3{display:grid;grid-template-columns:repeat(3,1fr);gap:18px}
+    .skill-card h3{margin:0 0 10px}.skill-card p{color:var(--muted);margin-bottom:16px}
+    .tags{display:flex;flex-wrap:wrap;gap:8px}.tag{font-size:12px;color:#d5deeb;padding:7px 10px;border:1px solid var(--line);border-radius:999px;background:rgba(255,255,255,.025)}
+    .edu-grid{display:grid;grid-template-columns:1fr 1fr;gap:18px}
+    .edu h3{margin:5px 0}.edu .meta{margin-bottom:8px}
+    .contact-card{padding:34px;display:flex;justify-content:space-between;align-items:center;gap:28px}
+    footer{border-top:1px solid var(--line);padding:34px 0 46px;color:var(--muted);font-size:14px}
+    @media(max-width:900px){
+      .hero,.about-grid{grid-template-columns:1fr}.hero{min-height:auto;padding-top:58px}.impact{grid-template-columns:1fr 1fr}.grid3,.edu-grid{grid-template-columns:1fr}.section-head,.contact-card{align-items:flex-start;flex-direction:column}
+    }
+    @media(max-width:650px){.navlinks{display:none}.statgrid,.impact{grid-template-columns:1fr}.hero-panel{padding:20px}section{padding:58px 0}}
   </style>
 </head>
 <body>
-  <nav><div class="wrap"><div class="brand">Muhammad Ilman Nafi</div><div class="navlinks"><a href="#about">About</a><a href="#experience">Experience</a><a href="#skills">Skills</a><a href="#contact">Contact</a></div></div></nav>
+  <nav>
+    <div class="wrap">
+      <a class="brand" href="#top">Muhammad Ilman Nafi</a>
+      <div class="navlinks">
+        <a href="#about">About</a><a href="#experience">Experience</a><a href="#expertise">Expertise</a><a href="#education">Education</a><a href="#contact">Contact</a>
+      </div>
+    </div>
+  </nav>
 
-  <main class="wrap">
-    <section class="hero">
-      <div>
-        <div class="eyebrow">Production • Electrical Engineering • Manufacturing</div>
-        <h1>Muhammad Ilman Nafi</h1>
-        <p class="lead">Production Group Leader with an Electrical Engineering background, experienced in copper foil manufacturing, DCS process monitoring, manpower coordination, safety, quality, and continuous improvement.</p>
-        <div class="cta">
-          <a class="btn primary" href="#experience">View Experience</a>
-          <a class="btn" href="https://www.linkedin.com/in/muhammad-ilman-nafi-b25719371" target="_blank" rel="noopener">LinkedIn</a>
-          <a class="btn" href="https://github.com/Nafik27" target="_blank" rel="noopener">GitHub</a>
+  <main id="top">
+    <div class="wrap">
+      <section class="hero">
+        <div>
+          <div class="kicker">Production Leadership · Electrical Engineering · Industrial Operations</div>
+          <h1>Engineering thinking.<br><span class="gradient">Production execution.</span></h1>
+          <p class="lead">Production Group Leader in copper foil manufacturing with hands-on experience in DCS process control, team coordination, production stability, safety, quality, and continuous improvement.</p>
+          <div class="cta">
+            <a class="btn primary" href="#experience">Explore experience →</a>
+            <a class="btn" href="https://www.linkedin.com/in/muhammad-ilman-nafi-b25719371" target="_blank" rel="noopener">LinkedIn ↗</a>
+            <a class="btn" href="https://github.com/Nafik27" target="_blank" rel="noopener">GitHub ↗</a>
+          </div>
         </div>
-      </div>
-      <aside class="profile-card">
-        <div class="metric"><b>Production</b><span>Team leadership & daily operations</span></div>
-        <div class="metric"><b>DCS</b><span>Temperature, flow, level & current-density monitoring</span></div>
-        <div class="metric"><b>8S / SOP</b><span>Safety, discipline & standardized work</span></div>
-      </aside>
-    </section>
 
-    <section id="about">
-      <h2 class="section-title">About</h2>
-      <div class="card">
-        <p>Electrical Engineering graduate from the University of Jember with hands-on manufacturing experience. Currently leading production activities at PT Hailiang Nova Material Indonesia in Gresik, East Java. Focus areas include production stability, operator coordination, process deviation analysis, safety compliance, and cross-functional problem solving with maintenance, DCS, and quality teams.</p>
-      </div>
-    </section>
+        <aside class="hero-panel">
+          <div class="status"><span class="dot"></span> Production Group Leader · Gresik, East Java</div>
+          <div class="statgrid">
+            <div class="stat"><b>98%</b><span>Operational efficiency maintained in DCS operations</span></div>
+            <div class="stat"><b>6</b><span>Production systems monitored for stability</span></div>
+            <div class="stat"><b>10%</b><span>Material-waste reduction through optimization</span></div>
+            <div class="stat"><b>15%</b><span>Downtime reduction through process control</span></div>
+          </div>
+        </aside>
+      </section>
 
-    <section id="experience">
-      <h2 class="section-title">Experience</h2>
-      <div class="timeline">
-        <div class="role">
-          <h3>Production Group Leader — PT Hailiang Nova Material Indonesia</h3>
-          <div class="meta">Gresik, East Java • Nov 2025 – Present</div>
-          <p>Lead copper foil production operations, coordinate operators across shifts, monitor critical process parameters through DCS, investigate deviations, support corrective actions, and maintain compliance with SOP, 8S, quality, and safety requirements.</p>
+      <section id="about">
+        <div class="section-head">
+          <div><div class="kicker">01 / Profile</div><h2>Built around people, process and control.</h2></div>
+          <div class="section-note">A practical manufacturing profile combining shop-floor leadership with an Electrical Engineering and industrial-control foundation.</div>
         </div>
-        <div class="role">
-          <h3>DCS Staff / Operator — PT Hailiang Nova Material Indonesia</h3>
-          <div class="meta">Manufacturing Operations</div>
-          <p>Monitored and controlled production parameters through DCS, supported process stability, responded to abnormal conditions, and coordinated with field production and maintenance teams.</p>
+        <div class="about-grid">
+          <div class="card">
+            <p style="font-size:19px;margin:0">Electrical Engineering graduate from the University of Jember, currently leading production activities at PT Hailiang Nova Material Indonesia. Experienced in copper foil production, DCS monitoring, deviation analysis, manpower coordination, operator development, and cross-functional problem solving with maintenance and quality teams.</p>
+          </div>
+          <div class="card facts">
+            <div class="fact"><span>Current role</span><strong>Production Group Leader</strong></div>
+            <div class="fact"><span>Industry</span><strong>Copper Foil Manufacturing</strong></div>
+            <div class="fact"><span>Foundation</span><strong>Electrical Engineering</strong></div>
+            <div class="fact"><span>Location</span><strong>Gresik, East Java</strong></div>
+          </div>
         </div>
-        <div class="role">
-          <h3>Intern — PLN (Persero) UP3B Mataram</h3>
-          <div class="meta">SCADA & Renewable Energy Integration</div>
-          <p>Worked on SCADA-related integration for renewable-energy power plants, strengthening practical knowledge in electrical systems, monitoring, and industrial control.</p>
+        <div class="impact">
+          <div class="card"><b>DCS</b><span>Process monitoring & control</span></div>
+          <div class="card"><b>SCADA</b><span>Electrical monitoring integration</span></div>
+          <div class="card"><b>PLC</b><span>Industrial automation foundation</span></div>
+          <div class="card"><b>8S</b><span>Safety & workplace discipline</span></div>
         </div>
-      </div>
-    </section>
+      </section>
 
-    <section id="skills">
-      <h2 class="section-title">Core Skills</h2>
-      <div class="grid">
-        <div class="card"><h3>Production Leadership</h3><p>Shift coordination, manpower allocation, operator guidance, daily target execution, and workflow control.</p></div>
-        <div class="card"><h3>Process & DCS</h3><p>Monitoring temperature, flow rate, liquid level, current density, process trends, and abnormal conditions.</p></div>
-        <div class="card"><h3>Improvement & Reliability</h3><p>Deviation analysis, corrective actions, continuous improvement, yield awareness, and cross-functional coordination.</p></div>
-      </div>
-      <div class="tagrow" style="margin-top:18px">
-        <span class="tag">Electrical Engineering</span><span class="tag">DCS</span><span class="tag">SCADA</span><span class="tag">Manufacturing</span><span class="tag">8S</span><span class="tag">SOP</span><span class="tag">Safety</span><span class="tag">Quality</span><span class="tag">Team Leadership</span><span class="tag">Continuous Improvement</span>
-      </div>
-    </section>
+      <section id="experience">
+        <div class="section-head">
+          <div><div class="kicker">02 / Experience</div><h2>From process control to production leadership.</h2></div>
+          <div class="section-note">Progression from technical DCS operations into direct production-team leadership.</div>
+        </div>
 
-    <section id="contact">
-      <h2 class="section-title">Contact</h2>
-      <div class="card">
-        <p>Open to opportunities in production, electrical engineering, maintenance, technical operations, and industrial manufacturing roles.</p>
-        <div class="cta"><a class="btn primary" href="https://www.linkedin.com/in/muhammad-ilman-nafi-b25719371" target="_blank" rel="noopener">Connect on LinkedIn</a></div>
-      </div>
-    </section>
+        <div class="timeline">
+          <article class="role current">
+            <h3>Production Group Leader — PT Hailiang Nova Material Indonesia</h3>
+            <div class="meta">Nov 2025 — Present · Gresik, East Java</div>
+            <ul>
+              <li>Lead daily copper foil production activities against production, quality, and safety requirements.</li>
+              <li>Coordinate operators across shifts and optimize manpower allocation and workflow.</li>
+              <li>Monitor critical parameters including temperature, flow rate, liquid level, and current density through DCS.</li>
+              <li>Analyze deviations, implement corrective actions, and coordinate with DCS, maintenance, and quality control.</li>
+              <li>Reinforce SOP, 8S, safety discipline, operator training, and continuous-improvement initiatives.</li>
+            </ul>
+          </article>
+
+          <article class="role">
+            <h3>Distributed Control System Staff — PT Hailiang Nova Material Indonesia</h3>
+            <div class="meta">Jan 2024 — Nov 2025 · Gresik, East Java</div>
+            <ul>
+              <li>Maintained production stability across six systems with a reported 98% operational efficiency rate.</li>
+              <li>Operated DCS for liquid copper foil production and optimized process parameters.</li>
+              <li>Optimized copper wire, antioxidant, and acid usage, contributing to a reported 10% reduction in material waste.</li>
+              <li>Controlled liquid level, temperature, and flow conditions, contributing to a reported 15% reduction in downtime.</li>
+            </ul>
+          </article>
+
+          <article class="role">
+            <h3>Training — Hailiang New Material, China</h3>
+            <div class="meta">Nov 2023 — Jan 2024 · Gansu, China</div>
+            <ul>
+              <li>Trained on the end-to-end liquid copper foil production process and DCS operation.</li>
+              <li>Developed practical understanding of raw-material processing, water treatment, cathode roller smoothing, power-station operations, and quality systems.</li>
+              <li>Collaborated with process engineers on production-workflow optimization.</li>
+            </ul>
+          </article>
+
+          <article class="role">
+            <h3>SCADA Internship — PT PLN (Persero) UP3B Mataram</h3>
+            <div class="meta">Feb 2022 — Mar 2022 · Mataram, West Nusa Tenggara</div>
+            <ul>
+              <li>Supported SCADA integration for renewable-energy plants including Narmada micro-hydro and Gili Islands solar installations.</li>
+              <li>Participated in electrical-system readiness activities for the Mandalika World SuperBike event.</li>
+              <li>Supported transformer maintenance activities at Sengkol main substation.</li>
+            </ul>
+          </article>
+        </div>
+      </section>
+
+      <section id="expertise">
+        <div class="section-head">
+          <div><div class="kicker">03 / Expertise</div><h2>Technical depth with operational ownership.</h2></div>
+        </div>
+        <div class="grid3">
+          <div class="card skill-card">
+            <h3>Production & Process</h3>
+            <p>Manufacturing execution, production stability, deviation response, process optimization, yield awareness, and material efficiency.</p>
+            <div class="tags"><span class="tag">Copper Foil</span><span class="tag">Process Parameters</span><span class="tag">Production Data</span><span class="tag">Corrective Action</span></div>
+          </div>
+          <div class="card skill-card">
+            <h3>Controls & Electrical</h3>
+            <p>Industrial process monitoring and automation foundation spanning DCS, SCADA, PLC, and electrical engineering tools.</p>
+            <div class="tags"><span class="tag">DCS</span><span class="tag">SCADA</span><span class="tag">PLC</span><span class="tag">Wonderware InTouch</span><span class="tag">CX-Programmer</span></div>
+          </div>
+          <div class="card skill-card">
+            <h3>Leadership & Standards</h3>
+            <p>Shift coordination, manpower allocation, operator guidance, safety discipline, SOP compliance, and cross-functional teamwork.</p>
+            <div class="tags"><span class="tag">Team Leadership</span><span class="tag">8S</span><span class="tag">SOP</span><span class="tag">Safety</span><span class="tag">Training</span></div>
+          </div>
+        </div>
+      </section>
+
+      <section id="education">
+        <div class="section-head">
+          <div><div class="kicker">04 / Foundation</div><h2>Education & technical development.</h2></div>
+        </div>
+        <div class="edu-grid">
+          <div class="card edu">
+            <div class="kicker">Education</div>
+            <h3>Bachelor of Engineering — Electrical Engineering</h3>
+            <div class="meta">University of Jember · 2023</div>
+            <p class="muted">Academic foundation in electrical engineering with leadership and laboratory experience.</p>
+          </div>
+          <div class="card edu">
+            <div class="kicker">Selected Training</div>
+            <h3>Industrial & Engineering Development</h3>
+            <div class="meta">BNSP · PLN Indonesia Power · AWS · Others</div>
+            <p class="muted">PLC-based electronic equipment operations, Solar PV design and simulation, computer vision fundamentals, leadership development, and technical training.</p>
+          </div>
+        </div>
+      </section>
+
+      <section id="contact">
+        <div class="card contact-card">
+          <div>
+            <div class="kicker">05 / Contact</div>
+            <h2 style="margin-bottom:8px">Open to the next engineering challenge.</h2>
+            <div class="muted">Production · Electrical · Maintenance · Technical Operations · Manufacturing</div>
+          </div>
+          <div class="cta" style="margin-top:0">
+            <a class="btn primary" href="https://www.linkedin.com/in/muhammad-ilman-nafi-b25719371" target="_blank" rel="noopener">Connect on LinkedIn →</a>
+          </div>
+        </div>
+      </section>
+    </div>
   </main>
 
-  <footer><div class="wrap">© 2026 Muhammad Ilman Nafi. Built with GitHub Pages.</div></footer>
+  <footer><div class="wrap">© 2026 Muhammad Ilman Nafi · Production leadership. Engineering foundation.</div></footer>
 </body>
 </html>
