@@ -36,3 +36,17 @@ The simulated operation uses a **12-hour rotating shift cycle**:
 | Day 6 | Off | Rest day |
 
 The dashboard treats this as a six-day repeating pattern. The current cycle position is not assumed without an operational reference date.
+
+
+## Manpower Allocation Engine
+
+The dashboard includes an interactive manpower model for the five-person production team. It allows the leader to:
+
+- mark each operator as present or absent;
+- configure the three Floor 1 operator task allocations without assuming a fixed individual assignment;
+- view DCS, Floor 2, and Floor 1 role coverage;
+- monitor average workload and identify the current bottleneck;
+- rebalance Floor 1 task allocation during the shift;
+- compare manpower coverage with the 12-hour rotating shift pattern.
+
+The model is intentionally based on simulated workload values for portfolio demonstration and does not represent confidential plant data.
