@@ -1,84 +1,98 @@
-import json
-import sqlite3
+import os
 from pathlib import Path
+from sqlalchemy import Boolean, Float, Integer, String, create_engine, select
+from sqlalchemy.orm import DeclarativeBase, Mapped, Session, mapped_column
 
-DB_PATH = Path(__file__).resolve().parent.parent / "data" / "production.db"
-DB_PATH.parent.mkdir(parents=True, exist_ok=True)
+DEFAULT_SQLITE = "sqlite:///" + str(
+    (Path(__file__).resolve().parent.parent / "data" / "production.db").as_posix()
+)
+DATABASE_URL = os.getenv("DATABASE_URL", DEFAULT_SQLITE)
 
-def connect():
-    conn = sqlite3.connect(DB_PATH, check_same_thread=False)
-    conn.row_factory = sqlite3.Row
-    return conn
+connect_args = {"check_same_thread": False} if DATABASE_URL.startswith("sqlite") else {}
+engine = create_engine(DATABASE_URL, pool_pre_ping=True, connect_args=connect_args)
+
+class Base(DeclarativeBase):
+    pass
+
+class Sample(Base):
+    __tablename__ = "samples"
+    id: Mapped[int] = mapped_column(Integer, primary_key=True, autoincrement=True)
+    timestamp: Mapped[str] = mapped_column(String(64), nullable=False)
+    temp_a: Mapped[float] = mapped_column(Float, nullable=False)
+    temp_b: Mapped[float] = mapped_column(Float, nullable=False)
+    dirty_level: Mapped[float] = mapped_column(Float, nullable=False)
+    clean_level: Mapped[float] = mapped_column(Float, nullable=False)
+    flow_rate: Mapped[float] = mapped_column(Float, nullable=False)
+    current_density: Mapped[float] = mapped_column(Float, nullable=False)
+    output_kg: Mapped[float] = mapped_column(Float, nullable=False)
+    availability: Mapped[float] = mapped_column(Float, nullable=False)
+    performance: Mapped[float] = mapped_column(Float, nullable=False)
+    quality: Mapped[float] = mapped_column(Float, nullable=False)
+    oee: Mapped[float] = mapped_column(Float, nullable=False)
+
+class Alarm(Base):
+    __tablename__ = "alarms"
+    id: Mapped[int] = mapped_column(Integer, primary_key=True, autoincrement=True)
+    timestamp: Mapped[str] = mapped_column(String(64), nullable=False)
+    severity: Mapped[str] = mapped_column(String(16), nullable=False)
+    source: Mapped[str] = mapped_column(String(128), nullable=False)
+    message: Mapped[str] = mapped_column(String(255), nullable=False)
+    acknowledged: Mapped[bool] = mapped_column(Boolean, default=False, nullable=False)
 
 def init_db():
-    with connect() as conn:
-        conn.execute("""
-        CREATE TABLE IF NOT EXISTS samples (
-            id INTEGER PRIMARY KEY AUTOINCREMENT,
-            timestamp TEXT NOT NULL,
-            temp_a REAL NOT NULL,
-            temp_b REAL NOT NULL,
-            dirty_level REAL NOT NULL,
-            clean_level REAL NOT NULL,
-            flow_rate REAL NOT NULL,
-            current_density REAL NOT NULL,
-            output_kg REAL NOT NULL,
-            availability REAL NOT NULL,
-            performance REAL NOT NULL,
-            quality REAL NOT NULL,
-            oee REAL NOT NULL
-        )
-        """)
-        conn.execute("""
-        CREATE TABLE IF NOT EXISTS alarms (
-            id INTEGER PRIMARY KEY AUTOINCREMENT,
-            timestamp TEXT NOT NULL,
-            severity TEXT NOT NULL,
-            source TEXT NOT NULL,
-            message TEXT NOT NULL,
-            acknowledged INTEGER NOT NULL DEFAULT 0
-        )
-        """)
+    if DATABASE_URL.startswith("sqlite"):
+        Path(DEFAULT_SQLITE.replace("sqlite:///", "")).parent.mkdir(parents=True, exist_ok=True)
+    Base.metadata.create_all(engine)
+
+def sample_to_dict(row: Sample):
+    return {
+        "id": row.id, "timestamp": row.timestamp, "temp_a": row.temp_a,
+        "temp_b": row.temp_b, "dirty_level": row.dirty_level,
+        "clean_level": row.clean_level, "flow_rate": row.flow_rate,
+        "current_density": row.current_density, "output_kg": row.output_kg,
+        "availability": row.availability, "performance": row.performance,
+        "quality": row.quality, "oee": row.oee,
+    }
+
+def alarm_to_dict(row: Alarm):
+    return {
+        "id": row.id, "timestamp": row.timestamp, "severity": row.severity,
+        "source": row.source, "message": row.message,
+        "acknowledged": int(row.acknowledged),
+    }
 
 def insert_sample(sample: dict):
-    with connect() as conn:
-        conn.execute(
-            """INSERT INTO samples (
-                timestamp,temp_a,temp_b,dirty_level,clean_level,flow_rate,current_density,
-                output_kg,availability,performance,quality,oee
-            ) VALUES (?,?,?,?,?,?,?,?,?,?,?,?)""",
-            (
-                sample["timestamp"], sample["temp_a"], sample["temp_b"],
-                sample["dirty_level"], sample["clean_level"], sample["flow_rate"],
-                sample["current_density"], sample["output_kg"], sample["availability"],
-                sample["performance"], sample["quality"], sample["oee"]
-            ),
-        )
+    with Session(engine) as session:
+        session.add(Sample(**{k: sample[k] for k in (
+            "timestamp","temp_a","temp_b","dirty_level","clean_level","flow_rate",
+            "current_density","output_kg","availability","performance","quality","oee"
+        )}))
+        session.commit()
 
 def insert_alarm(alarm: dict):
-    with connect() as conn:
-        conn.execute(
-            "INSERT INTO alarms (timestamp,severity,source,message) VALUES (?,?,?,?)",
-            (alarm["timestamp"], alarm["severity"], alarm["source"], alarm["message"]),
-        )
+    with Session(engine) as session:
+        session.add(Alarm(
+            timestamp=alarm["timestamp"], severity=alarm["severity"],
+            source=alarm["source"], message=alarm["message"],
+            acknowledged=bool(alarm.get("acknowledged", False)),
+        ))
+        session.commit()
 
 def history(limit=120):
-    with connect() as conn:
-        rows = conn.execute(
-            "SELECT * FROM samples ORDER BY id DESC LIMIT ?", (limit,)
-        ).fetchall()
-    return [dict(r) for r in reversed(rows)]
+    with Session(engine) as session:
+        rows = session.scalars(select(Sample).order_by(Sample.id.desc()).limit(limit)).all()
+        return [sample_to_dict(r) for r in reversed(rows)]
 
 def alarms(limit=30):
-    with connect() as conn:
-        rows = conn.execute(
-            "SELECT * FROM alarms ORDER BY id DESC LIMIT ?", (limit,)
-        ).fetchall()
-    return [dict(r) for r in rows]
+    with Session(engine) as session:
+        rows = session.scalars(select(Alarm).order_by(Alarm.id.desc()).limit(limit)).all()
+        return [alarm_to_dict(r) for r in rows]
 
 def acknowledge_alarm(alarm_id: int):
-    with connect() as conn:
-        cur = conn.execute(
-            "UPDATE alarms SET acknowledged=1 WHERE id=?", (alarm_id,)
-        )
-        return cur.rowcount > 0
+    with Session(engine) as session:
+        alarm = session.get(Alarm, alarm_id)
+        if not alarm:
+            return False
+        alarm.acknowledged = True
+        session.commit()
+        return True
