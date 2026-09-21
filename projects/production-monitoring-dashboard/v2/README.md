@@ -12,7 +12,7 @@ Process Simulator (Python)
           v
 FastAPI + WebSocket
           |
-          +---- SQLite Historian
+          +---- SQLite / PostgreSQL Historian
           |
           v
 React Operator Dashboard
@@ -22,7 +22,7 @@ React Operator Dashboard
 
 - FastAPI REST API
 - WebSocket live process stream
-- SQLite production historian
+- SQLite development historian\n- PostgreSQL production database support
 - React + Recharts dashboard
 - Calculated OEE
   - Availability
@@ -118,3 +118,52 @@ Then open http://localhost:5173.
 
 **Muhammad Ilman Nafi**  
 Electrical Engineering · Production Leadership · Industrial Operations
+
+
+## Public deployment
+
+The repository now contains production deployment configuration.
+
+### Backend + database — Render
+
+The `render.yaml` Blueprint provisions:
+
+- FastAPI web service
+- Managed PostgreSQL database
+- Health check at `/api/health`
+- `DATABASE_URL` injection
+
+In Render, create a new Blueprint from this GitHub repository and select the repository root. After the backend is created, set:
+
+```text
+FRONTEND_ORIGIN=https://YOUR-FRONTEND.vercel.app
+```
+
+### Frontend — Vercel
+
+Import the GitHub repository and set the project Root Directory to:
+
+```text
+projects/production-monitoring-dashboard/v2/frontend
+```
+
+Set the environment variable:
+
+```text
+VITE_API_URL=https://YOUR-RENDER-API.onrender.com
+```
+
+Then deploy.
+
+### CI
+
+GitHub Actions validates both sides of V2 on relevant pushes and pull requests:
+
+- Python dependency installation + byte-code compilation
+- Node dependency installation + Vite production build
+
+Workflow:
+
+```text
+.github/workflows/production-monitoring-v2-ci.yml
+```
