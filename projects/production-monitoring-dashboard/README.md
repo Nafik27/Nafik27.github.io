@@ -68,3 +68,23 @@ This is a demonstration project. All displayed production values and alarms are 
 
 Muhammad Ilman Nafi  
 Electrical Engineering · Production Leadership · Industrial Operations
+
+
+## V2 full-stack edition
+
+The project has been expanded into a second-generation full-stack implementation.
+
+V2 adds:
+
+- React frontend
+- FastAPI backend
+- SQLite historian
+- WebSocket live process streaming
+- OEE calculation
+- Rule-based alarms
+- Alarm acknowledgement
+- Docker Compose deployment
+
+Source: `projects/production-monitoring-dashboard/v2/`
+
+The original static dashboard remains available as the GitHub Pages demo, while V2 demonstrates a deployable client-server architecture.
