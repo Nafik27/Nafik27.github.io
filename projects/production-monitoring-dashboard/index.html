@@ -1,142 +1,382 @@
 <!doctype html>
 <html lang="en">
 <head>
-  <meta charset="utf-8">
-  <meta name="viewport" content="width=device-width,initial-scale=1">
-  <meta name="description" content="Industrial production monitoring dashboard simulating DCS process data for a copper foil manufacturing line.">
-  <title>Industrial Production Monitoring | Muhammad Ilman Nafi</title>
-  <style>
-    :root{
-      --bg:#071018;--panel:#0d1823;--panel2:#111f2d;--line:#223444;
-      --text:#eaf2f8;--muted:#8fa2b3;--cyan:#51d7ff;--green:#4be2a0;
-      --amber:#ffbf5a;--red:#ff6b73;--blue:#7f9cff
-    }
-    *{box-sizing:border-box}
-    body{margin:0;background:linear-gradient(180deg,#071018,#09131d 55%,#071018);color:var(--text);font-family:Inter,system-ui,-apple-system,Segoe UI,Roboto,Arial,sans-serif}
-    header{position:sticky;top:0;z-index:10;background:rgba(7,16,24,.92);backdrop-filter:blur(12px);border-bottom:1px solid var(--line)}
-    .top{width:min(1400px,94%);margin:auto;min-height:70px;display:flex;align-items:center;justify-content:space-between;gap:20px}
-    .brand b{display:block;font-size:16px}.brand span,.muted{color:var(--muted)}
-    .live{display:flex;align-items:center;gap:8px;font-size:13px}.dot{width:9px;height:9px;border-radius:50%;background:var(--green);box-shadow:0 0 14px var(--green)}
-    main{width:min(1400px,94%);margin:24px auto 50px}
-    .hero{display:flex;align-items:flex-end;justify-content:space-between;gap:20px;margin-bottom:20px}
-    h1{font-size:clamp(28px,4vw,46px);margin:6px 0 8px;letter-spacing:-.04em}.eyebrow{font-size:12px;letter-spacing:.16em;text-transform:uppercase;color:var(--cyan);font-weight:800}
-    .stamp{text-align:right;color:var(--muted);font-size:13px}
-    .kpis{display:grid;grid-template-columns:repeat(6,1fr);gap:12px;margin-bottom:12px}
-    .card{background:linear-gradient(180deg,rgba(17,31,45,.94),rgba(11,24,35,.96));border:1px solid var(--line);border-radius:16px;padding:18px;box-shadow:0 18px 45px rgba(0,0,0,.14)}
-    .kpi .label{font-size:12px;color:var(--muted);margin-bottom:10px}.kpi .value{font-size:27px;font-weight:800;letter-spacing:-.03em}.kpi .sub{font-size:12px;margin-top:6px;color:var(--muted)}
-    .good{color:var(--green)}.warn{color:var(--amber)}.bad{color:var(--red)}
-    .grid{display:grid;grid-template-columns:1.2fr .8fr;gap:12px;margin-top:12px}
-    .panel-head{display:flex;justify-content:space-between;align-items:center;margin-bottom:14px}.panel-head h2{font-size:16px;margin:0}.badge{font-size:11px;padding:5px 8px;border-radius:999px;border:1px solid var(--line);color:var(--muted)}
-    canvas{width:100%;height:280px;background:#09131d;border-radius:12px;border:1px solid #172838}
-    .process{display:grid;grid-template-columns:repeat(2,1fr);gap:12px}
-    .metric{padding:16px;border-radius:13px;background:#0a1520;border:1px solid #1d3142}
-    .metric .mhead{display:flex;justify-content:space-between;color:var(--muted);font-size:12px}.metric strong{display:block;font-size:24px;margin:10px 0}.bar{height:7px;background:#142432;border-radius:99px;overflow:hidden}.fill{height:100%;background:linear-gradient(90deg,var(--cyan),var(--blue));border-radius:99px}
-    .alarms{display:grid;gap:8px}.alarm{display:grid;grid-template-columns:80px 1fr 90px;gap:12px;align-items:center;padding:12px;background:#0a1520;border:1px solid #1d3142;border-radius:12px;font-size:13px}.sev{font-weight:800}.sev.high{color:var(--red)}.sev.medium{color:var(--amber)}.sev.info{color:var(--cyan)}
-    .machine-grid{display:grid;grid-template-columns:repeat(4,1fr);gap:10px}.machine{padding:14px;border:1px solid #1d3142;border-radius:12px;background:#0a1520}.machine strong{display:block;margin-bottom:8px}.machine span{font-size:12px}.state{display:inline-flex;align-items:center;gap:7px}.state:before{content:"";width:8px;height:8px;border-radius:50%;background:var(--green)}.state.warning:before{background:var(--amber)}
-    .footer-note{margin-top:18px;color:var(--muted);font-size:12px;text-align:center}
-    a{color:var(--cyan)}
-    @media(max-width:1100px){.kpis{grid-template-columns:repeat(3,1fr)}.grid{grid-template-columns:1fr}.machine-grid{grid-template-columns:repeat(2,1fr)}}
-    @media(max-width:650px){.kpis{grid-template-columns:1fr 1fr}.process{grid-template-columns:1fr}.machine-grid{grid-template-columns:1fr}.hero{align-items:flex-start;flex-direction:column}.stamp{text-align:left}.alarm{grid-template-columns:65px 1fr}.alarm time{display:none}}
-  </style>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<meta name="description" content="Digital HMI and copper foil production control room simulation with live process data, equipment status, alarms and production KPIs.">
+<meta name="theme-color" content="#071018">
+<title>Copper Foil Digital HMI | Muhammad Ilman Nafi</title>
+<style>
+:root{
+  --bg:#061018;--bg2:#08131d;--panel:#0d1a26;--panel2:#0a1620;
+  --line:#203747;--line2:#17303f;--text:#eef7fb;--muted:#8198aa;
+  --cyan:#54d8ff;--cyan2:#2fbce8;--blue:#7f99ff;--green:#4be2a0;
+  --amber:#ffbd59;--red:#ff6e78;--shadow:0 20px 50px rgba(0,0,0,.22)
+}
+*{box-sizing:border-box}
+html{scroll-behavior:smooth}
+body{
+  margin:0;
+  color:var(--text);
+  font-family:Inter,ui-sans-serif,system-ui,-apple-system,BlinkMacSystemFont,"Segoe UI",Roboto,Arial,sans-serif;
+  background:
+    radial-gradient(circle at 10% 0,rgba(84,216,255,.09),transparent 30%),
+    radial-gradient(circle at 90% 10%,rgba(127,153,255,.07),transparent 28%),
+    linear-gradient(180deg,var(--bg),#07121b 55%,#061018)
+}
+a{color:inherit;text-decoration:none}
+button{font:inherit}
+.shell{width:min(1500px,95%);margin:auto}
+.topbar{
+  position:sticky;top:0;z-index:50;
+  background:rgba(6,16,24,.92);backdrop-filter:blur(14px);
+  border-bottom:1px solid var(--line)
+}
+.topbar .shell{
+  min-height:68px;display:flex;align-items:center;justify-content:space-between;gap:20px
+}
+.brand b{display:block;font-size:15px;letter-spacing:.01em}
+.brand span{display:block;color:var(--muted);font-size:12px;margin-top:2px}
+.top-status{display:flex;align-items:center;gap:16px;flex-wrap:wrap;justify-content:flex-end}
+.pill{
+  display:inline-flex;align-items:center;gap:8px;padding:7px 10px;border:1px solid var(--line);
+  border-radius:999px;color:#b7c9d5;font-size:11px;background:#08141e
+}
+.live-dot{width:8px;height:8px;border-radius:50%;background:var(--green);box-shadow:0 0 14px var(--green)}
+main{padding:24px 0 50px}
+.hero{display:flex;align-items:end;justify-content:space-between;gap:24px;margin-bottom:16px}
+.eyebrow{font-size:11px;font-weight:800;text-transform:uppercase;letter-spacing:.17em;color:var(--cyan)}
+h1{font-size:clamp(32px,4.7vw,56px);letter-spacing:-.05em;line-height:1;margin:7px 0 9px}
+.hero p{margin:0;color:var(--muted);max-width:850px}
+.hero-meta{display:grid;grid-template-columns:repeat(2,auto);gap:8px}
+.meta-box{border:1px solid var(--line);background:#08141e;border-radius:12px;padding:10px 12px;min-width:125px}
+.meta-box span{display:block;color:var(--muted);font-size:10px;text-transform:uppercase;letter-spacing:.12em}
+.meta-box b{display:block;margin-top:5px;font-size:14px}
+.kpi-strip{display:grid;grid-template-columns:repeat(6,1fr);gap:10px;margin-bottom:10px}
+.kpi{
+  padding:16px;border:1px solid var(--line);background:linear-gradient(180deg,#0e1d29,#09151f);
+  border-radius:14px;box-shadow:var(--shadow)
+}
+.kpi span{font-size:10px;color:var(--muted);text-transform:uppercase;letter-spacing:.1em}
+.kpi strong{display:block;font-size:24px;letter-spacing:-.03em;margin:7px 0 4px}
+.kpi small{color:#60788b;font-size:10px}.good{color:var(--green)}.warn{color:var(--amber)}.bad{color:var(--red)}
+.dashboard{display:grid;grid-template-columns:1.2fr .8fr;gap:10px}
+.card{
+  border:1px solid var(--line);background:linear-gradient(180deg,rgba(13,26,38,.97),rgba(8,20,29,.97));
+  border-radius:16px;padding:18px;box-shadow:var(--shadow)
+}
+.card-head{display:flex;justify-content:space-between;align-items:end;gap:18px;margin-bottom:14px}
+.card-head h2{margin:4px 0 0;font-size:17px}.card-head small{color:#6d8496}
+.hmi-card{grid-column:1/-1}
+.process-stage{
+  position:relative;
+  display:grid;grid-template-columns:1fr .65fr 1fr .65fr 1fr .65fr 1.1fr .65fr 1fr;
+  gap:10px;align-items:center;min-height:300px;
+  background:
+    linear-gradient(rgba(255,255,255,.015) 1px,transparent 1px),
+    linear-gradient(90deg,rgba(255,255,255,.015) 1px,transparent 1px),
+    #08141e;
+  background-size:28px 28px;
+  border:1px solid var(--line2);border-radius:14px;padding:24px
+}
+.equipment{
+  position:relative;min-height:170px;border:1px solid #254154;border-radius:14px;
+  background:linear-gradient(180deg,#10212f,#0a1721);padding:14px;display:flex;flex-direction:column;justify-content:space-between
+}
+.equipment.active{box-shadow:0 0 0 1px rgba(75,226,160,.08),0 0 25px rgba(75,226,160,.05)}
+.equipment.warning{border-color:#65512d}.equipment .tag{font-size:10px;color:#6f8899;text-transform:uppercase;letter-spacing:.12em}
+.equipment h3{font-size:14px;margin:7px 0 0}.equipment .value{font-size:22px;font-weight:800;letter-spacing:-.03em}
+.eq-status{display:inline-flex;align-items:center;gap:7px;font-size:10px;font-weight:800}
+.eq-status i{width:7px;height:7px;border-radius:50%;background:var(--green);box-shadow:0 0 10px var(--green)}
+.warning .eq-status i{background:var(--amber);box-shadow:0 0 10px var(--amber)}
+.tank-vessel{
+  width:82%;height:74px;margin:10px auto 4px;border:2px solid #38596c;border-radius:14px 14px 18px 18px;
+  position:relative;overflow:hidden;background:#07131c
+}
+.tank-fill{
+  position:absolute;left:0;right:0;bottom:0;height:68%;
+  background:linear-gradient(180deg,rgba(84,216,255,.34),rgba(47,188,232,.55));
+  transition:height .5s ease
+}
+.tank-fill:before{content:"";position:absolute;left:-20%;right:-20%;top:-4px;height:8px;border-radius:50%;background:rgba(155,235,255,.65);animation:wave 2.4s ease-in-out infinite}
+@keyframes wave{0%,100%{transform:translateX(-4%)}50%{transform:translateX(4%)}}
+.pipe{height:6px;background:#214457;border-radius:99px;position:relative;overflow:hidden}
+.pipe:after{
+  content:"";position:absolute;inset:0;
+  background:repeating-linear-gradient(90deg,transparent 0 18px,rgba(84,216,255,.9) 18px 28px,transparent 28px 42px);
+  animation:flow 1.2s linear infinite
+}
+@keyframes flow{to{transform:translateX(42px)}}
+.pump-visual{width:58px;height:58px;border:2px solid #33566b;border-radius:50%;margin:12px auto;position:relative}
+.pump-visual:before,.pump-visual:after{content:"";position:absolute;left:50%;top:50%;width:34px;height:4px;background:var(--cyan);transform-origin:center}
+.pump-visual:before{transform:translate(-50%,-50%) rotate(0deg);animation:spinA 1.4s linear infinite}
+.pump-visual:after{transform:translate(-50%,-50%) rotate(90deg);animation:spinB 1.4s linear infinite}
+@keyframes spinA{to{transform:translate(-50%,-50%) rotate(360deg)}}@keyframes spinB{to{transform:translate(-50%,-50%) rotate(450deg)}}
+.filter-visual{margin:14px auto;width:64px;height:64px;border:2px solid #486072;border-radius:10px;position:relative;overflow:hidden}
+.filter-visual:before{content:"";position:absolute;inset:8px;background:repeating-linear-gradient(90deg,#24475d 0 3px,transparent 3px 7px)}
+.roller-visual{display:flex;justify-content:center;gap:8px;margin:13px 0}.roller-visual i{width:28px;height:64px;border-radius:16px;background:linear-gradient(90deg,#294557,#6f90a4,#294557);animation:pulse 2s ease-in-out infinite}
+@keyframes pulse{50%{filter:brightness(1.18)}}
+.output-visual{font-size:42px;text-align:center;margin:8px 0 2px;color:var(--cyan)}
+.lower{display:grid;grid-template-columns:1.1fr .9fr;gap:10px;margin-top:10px}
+canvas{width:100%;height:290px;background:#08141e;border:1px solid var(--line2);border-radius:12px}
+.param-grid{display:grid;grid-template-columns:repeat(2,1fr);gap:9px}
+.param{background:#08141e;border:1px solid var(--line2);border-radius:12px;padding:13px}
+.param .row{display:flex;justify-content:space-between;gap:10px;color:var(--muted);font-size:10px}
+.param b{display:block;font-size:20px;margin:8px 0}.bar{height:5px;background:#132633;border-radius:99px;overflow:hidden}.bar i{display:block;height:100%;background:linear-gradient(90deg,var(--cyan),var(--blue));border-radius:99px}
+.bottom{display:grid;grid-template-columns:1fr 1fr;gap:10px;margin-top:10px}
+.alarm-list{display:grid;gap:8px;max-height:260px;overflow:auto}
+.alarm{
+  display:grid;grid-template-columns:80px 1fr 70px;gap:12px;align-items:center;
+  background:#08141e;border:1px solid var(--line2);border-left:3px solid var(--amber);border-radius:10px;padding:10px
+}
+.alarm.high{border-left-color:var(--red)}.alarm.info{border-left-color:var(--cyan)}
+.alarm b{font-size:10px}.alarm span,.alarm time{font-size:10px;color:var(--muted)}
+.machine-grid{display:grid;grid-template-columns:repeat(4,1fr);gap:8px}
+.machine{background:#08141e;border:1px solid var(--line2);border-radius:10px;padding:12px}
+.machine span{font-size:10px;color:var(--muted)}.machine b{display:block;font-size:12px;margin:5px 0 7px}.mini-state{font-size:10px;font-weight:800}.mini-state.run{color:var(--green)}.mini-state.warn{color:var(--amber)}
+footer{margin-top:16px;text-align:center;color:#5f7688;font-size:10px}
+footer a{color:var(--cyan)}
+@media(max-width:1200px){
+  .kpi-strip{grid-template-columns:repeat(3,1fr)}
+  .dashboard,.lower,.bottom{grid-template-columns:1fr}
+  .process-stage{grid-template-columns:1fr 70px 1fr 70px 1fr}
+  .process-stage .stage-hide-md{display:none}
+}
+@media(max-width:760px){
+  .hero{flex-direction:column;align-items:flex-start}.hero-meta{grid-template-columns:1fr 1fr}
+  .kpi-strip{grid-template-columns:1fr 1fr}.param-grid,.machine-grid{grid-template-columns:1fr 1fr}
+  .process-stage{grid-template-columns:1fr;gap:8px}.pipe{width:6px;height:48px;margin:auto}.pipe:after{background:repeating-linear-gradient(180deg,transparent 0 14px,rgba(84,216,255,.9) 14px 24px,transparent 24px 36px);animation:flowY 1.2s linear infinite}
+  @keyframes flowY{to{transform:translateY(36px)}}
+  .stage-hide-md{display:block!important}.alarm{grid-template-columns:60px 1fr}.alarm time{display:none}
+}
+</style>
 </head>
 <body>
-<header>
-  <div class="top">
-    <div class="brand"><b>Industrial Production Monitoring</b><span>DCS Simulation · Copper Foil Process</span></div>
-    <div class="live"><span class="dot"></span><span>LIVE SIMULATION</span></div>
+<header class="topbar">
+  <div class="shell">
+    <div class="brand">
+      <b>Copper Foil Digital HMI</b>
+      <span>Production Control Room · Simulated Industrial Process</span>
+    </div>
+    <div class="top-status">
+      <div class="pill"><span class="live-dot"></span> LIVE SIMULATION</div>
+      <div class="pill">MODE · AUTO</div>
+      <div class="pill" id="clock">--:--:--</div>
+    </div>
   </div>
 </header>
 
-<main>
+<main class="shell">
   <section class="hero">
-    <div><div class="eyebrow">Manufacturing Operations Dashboard</div><h1>Production line overview</h1><div class="muted">Real-time simulation of critical process parameters, production KPIs, equipment states, and alarms.</div></div>
-    <div class="stamp">Last update<br><strong id="lastUpdate">--:--:--</strong></div>
+    <div>
+      <div class="eyebrow">Digital HMI / Manufacturing Operations</div>
+      <h1>Line 01 · Copper Foil Process</h1>
+      <p>Real-time simulation of process flow, equipment states, production KPIs, alarms, and critical DCS parameters.</p>
+    </div>
+    <div class="hero-meta">
+      <div class="meta-box"><span>Shift</span><b>A · Day Shift</b></div>
+      <div class="meta-box"><span>Control State</span><b class="good">Stable</b></div>
+    </div>
   </section>
 
-  <section class="kpis">
-    <div class="card kpi"><div class="label">Production Output</div><div class="value" id="output">1,248 kg</div><div class="sub">Target: 1,300 kg / shift</div></div>
-    <div class="card kpi"><div class="label">OEE</div><div class="value good" id="oee">91.8%</div><div class="sub">Availability × Performance × Quality</div></div>
-    <div class="card kpi"><div class="label">Quality Rate</div><div class="value good" id="quality">98.6%</div><div class="sub">Within process specification</div></div>
-    <div class="card kpi"><div class="label">Downtime</div><div class="value warn" id="downtime">21 min</div><div class="sub">Current shift</div></div>
-    <div class="card kpi"><div class="label">Active Alarms</div><div class="value bad" id="activeAlarms">2</div><div class="sub">1 process · 1 equipment</div></div>
-    <div class="card kpi"><div class="label">Line Status</div><div class="value good">RUNNING</div><div class="sub">Automatic control enabled</div></div>
+  <section class="kpi-strip">
+    <div class="kpi"><span>Production Output</span><strong id="output">1,248 kg</strong><small>Target 1,300 kg / shift</small></div>
+    <div class="kpi"><span>OEE</span><strong class="good" id="oee">91.8%</strong><small>Availability × Performance × Quality</small></div>
+    <div class="kpi"><span>Quality Rate</span><strong class="good" id="quality">98.6%</strong><small>Good production</small></div>
+    <div class="kpi"><span>Downtime</span><strong class="warn" id="downtime">21 min</strong><small>Current shift</small></div>
+    <div class="kpi"><span>Active Alarms</span><strong class="bad" id="activeAlarms">2</strong><small>Process + equipment</small></div>
+    <div class="kpi"><span>Line Status</span><strong class="good">RUNNING</strong><small>Automatic control enabled</small></div>
   </section>
 
-  <section class="grid">
-    <div class="card">
-      <div class="panel-head"><h2>Process Trend — Last 60 Samples</h2><span class="badge">Temperature / Level</span></div>
+  <section class="dashboard">
+    <article class="card hmi-card">
+      <div class="card-head">
+        <div><div class="eyebrow">Process Mimic</div><h2>Production flow overview</h2></div>
+        <small>Animated process visualization</small>
+      </div>
+
+      <div class="process-stage">
+        <div class="equipment active">
+          <div>
+            <div class="tag">Dissolution</div>
+            <h3>Tank A</h3>
+            <div class="tank-vessel"><div class="tank-fill" id="tankAfill"></div></div>
+          </div>
+          <div>
+            <div class="value"><span id="tempA">89.2</span>°C</div>
+            <div class="eq-status"><i></i> NORMAL</div>
+          </div>
+        </div>
+
+        <div class="pipe"></div>
+
+        <div class="equipment active">
+          <div>
+            <div class="tag">Dissolution</div>
+            <h3>Tank B</h3>
+            <div class="tank-vessel"><div class="tank-fill" id="tankBfill"></div></div>
+          </div>
+          <div>
+            <div class="value"><span id="tempB">88.7</span>°C</div>
+            <div class="eq-status"><i></i> NORMAL</div>
+          </div>
+        </div>
+
+        <div class="pipe"></div>
+
+        <div class="equipment active">
+          <div>
+            <div class="tag">Transfer</div>
+            <h3>Pump P-101</h3>
+            <div class="pump-visual"></div>
+          </div>
+          <div>
+            <div class="value"><span id="flow">122.4</span> L/min</div>
+            <div class="eq-status"><i></i> RUNNING</div>
+          </div>
+        </div>
+
+        <div class="pipe stage-hide-md"></div>
+
+        <div class="equipment warning stage-hide-md">
+          <div>
+            <div class="tag">Filtration</div>
+            <h3>Filter F-201</h3>
+            <div class="filter-visual"></div>
+          </div>
+          <div>
+            <div class="value">1.9 bar</div>
+            <div class="eq-status"><i></i> WARNING</div>
+          </div>
+        </div>
+
+        <div class="pipe stage-hide-md"></div>
+
+        <div class="equipment active stage-hide-md">
+          <div>
+            <div class="tag">Electrodeposition</div>
+            <h3>Cathode Roller</h3>
+            <div class="roller-visual"><i></i><i></i></div>
+          </div>
+          <div>
+            <div class="value"><span id="current">43.8</span> A/dm²</div>
+            <div class="eq-status"><i></i> RUNNING</div>
+          </div>
+        </div>
+      </div>
+    </article>
+  </section>
+
+  <section class="lower">
+    <article class="card">
+      <div class="card-head">
+        <div><div class="eyebrow">Historian Trend</div><h2>Temperature / Tank Level</h2></div>
+        <small>Last 60 samples</small>
+      </div>
       <canvas id="trend" width="900" height="300"></canvas>
-    </div>
-    <div class="card">
-      <div class="panel-head"><h2>Critical Process Parameters</h2><span class="badge">DCS</span></div>
-      <div class="process">
-        <div class="metric"><div class="mhead"><span>Dissolution Tank A</span><span>°C</span></div><strong id="tempA">89.2</strong><div class="bar"><div class="fill" id="barA" style="width:89%"></div></div></div>
-        <div class="metric"><div class="mhead"><span>Dissolution Tank B</span><span>°C</span></div><strong id="tempB">88.7</strong><div class="bar"><div class="fill" id="barB" style="width:88%"></div></div></div>
-        <div class="metric"><div class="mhead"><span>Dirty Solution Tank</span><span>mm</span></div><strong id="dirtyLevel">1,964</strong><div class="bar"><div class="fill" id="barDirty" style="width:72%"></div></div></div>
-        <div class="metric"><div class="mhead"><span>Clean Solution Tank</span><span>mm</span></div><strong id="cleanLevel">1,813</strong><div class="bar"><div class="fill" id="barClean" style="width:66%"></div></div></div>
-        <div class="metric"><div class="mhead"><span>Flow Rate</span><span>L/min</span></div><strong id="flow">122.4</strong><div class="bar"><div class="fill" id="barFlow" style="width:76%"></div></div></div>
-        <div class="metric"><div class="mhead"><span>Current Density</span><span>A/dm²</span></div><strong id="current">43.8</strong><div class="bar"><div class="fill" id="barCurrent" style="width:73%"></div></div></div>
+    </article>
+
+    <article class="card">
+      <div class="card-head">
+        <div><div class="eyebrow">DCS Parameters</div><h2>Critical process values</h2></div>
+        <small>2-second refresh</small>
       </div>
-    </div>
+      <div class="param-grid">
+        <div class="param"><div class="row"><span>Dissolution Tank A</span><span>°C</span></div><b id="pTempA">89.2</b><div class="bar"><i id="barA" style="width:72%"></i></div></div>
+        <div class="param"><div class="row"><span>Dissolution Tank B</span><span>°C</span></div><b id="pTempB">88.7</b><div class="bar"><i id="barB" style="width:70%"></i></div></div>
+        <div class="param"><div class="row"><span>Dirty Solution Tank</span><span>mm</span></div><b id="dirtyLevel">1,964</b><div class="bar"><i id="barDirty" style="width:69%"></i></div></div>
+        <div class="param"><div class="row"><span>Clean Solution Tank</span><span>mm</span></div><b id="cleanLevel">1,813</b><div class="bar"><i id="barClean" style="width:63%"></i></div></div>
+        <div class="param"><div class="row"><span>Flow Rate</span><span>L/min</span></div><b id="pFlow">122.4</b><div class="bar"><i id="barFlow" style="width:76%"></i></div></div>
+        <div class="param"><div class="row"><span>Current Density</span><span>A/dm²</span></div><b id="pCurrent">43.8</b><div class="bar"><i id="barCurrent" style="width:73%"></i></div></div>
+      </div>
+    </article>
   </section>
 
-  <section class="grid">
-    <div class="card">
-      <div class="panel-head"><h2>Equipment Status</h2><span class="badge">4 monitored assets</span></div>
+  <section class="bottom">
+    <article class="card">
+      <div class="card-head">
+        <div><div class="eyebrow">Alarm & Event Log</div><h2>Recent events</h2></div>
+        <small>Severity prioritized</small>
+      </div>
+      <div class="alarm-list">
+        <div class="alarm high"><b class="bad">HIGH</b><span>Filter F-201 differential pressure above warning limit</span><time>13:01</time></div>
+        <div class="alarm"><b class="warn">MEDIUM</b><span>Tank B temperature approaching upper control band</span><time>12:54</time></div>
+        <div class="alarm info"><b style="color:var(--cyan)">INFO</b><span>Shift production target reached 90%</span><time>12:42</time></div>
+      </div>
+    </article>
+
+    <article class="card">
+      <div class="card-head">
+        <div><div class="eyebrow">Equipment State</div><h2>Monitored assets</h2></div>
+        <small>Control room summary</small>
+      </div>
       <div class="machine-grid">
-        <div class="machine"><strong>Cathode Roller 01</strong><span class="state">RUNNING</span></div>
-        <div class="machine"><strong>Circulation Pump P-101</strong><span class="state">RUNNING</span></div>
-        <div class="machine"><strong>Filter Unit F-201</strong><span class="state warning">WARNING</span></div>
-        <div class="machine"><strong>Cooling System C-01</strong><span class="state">RUNNING</span></div>
+        <div class="machine"><span>CR-01</span><b>Cathode Roller</b><div class="mini-state run">RUNNING</div></div>
+        <div class="machine"><span>P-101</span><b>Circulation Pump</b><div class="mini-state run">RUNNING</div></div>
+        <div class="machine"><span>F-201</span><b>Filter Unit</b><div class="mini-state warn">WARNING</div></div>
+        <div class="machine"><span>C-01</span><b>Cooling System</b><div class="mini-state run">RUNNING</div></div>
       </div>
-    </div>
-    <div class="card">
-      <div class="panel-head"><h2>Alarm History</h2><span class="badge">Latest events</span></div>
-      <div class="alarms">
-        <div class="alarm"><span class="sev high">HIGH</span><span>Filter differential pressure above warning limit</span><time>13:01</time></div>
-        <div class="alarm"><span class="sev medium">MEDIUM</span><span>Tank B temperature approaching upper control band</span><time>12:54</time></div>
-        <div class="alarm"><span class="sev info">INFO</span><span>Shift production target reached 90%</span><time>12:42</time></div>
-      </div>
-    </div>
+    </article>
   </section>
 
-  <div class="footer-note">Portfolio engineering project by Muhammad Ilman Nafi · Data is simulated for demonstration purposes · <a href="../../">Back to portfolio</a></div>
+  <footer>
+    Portfolio engineering project by Muhammad Ilman Nafi · Simulated data only · No confidential plant data ·
+    <a href="../../">Back to portfolio</a>
+  </footer>
 </main>
 
 <script>
-  const ids = id => document.getElementById(id);
-  const tempSeries = Array.from({length:60},(_,i)=>88.6+Math.sin(i/6)*.8+Math.random()*.45);
-  const levelSeries = Array.from({length:60},(_,i)=>66+Math.sin(i/8)*5+Math.random()*2.4);
-  const canvas=ids('trend'),ctx=canvas.getContext('2d');
+const $=id=>document.getElementById(id);
+const tempSeries=Array.from({length:60},(_,i)=>88.6+Math.sin(i/6)*.75+Math.random()*.38);
+const levelSeries=Array.from({length:60},(_,i)=>67+Math.sin(i/8)*5+Math.random()*2.2);
+const canvas=$("trend"),ctx=canvas.getContext("2d");
 
-  function draw(){
-    const w=canvas.width,h=canvas.height,p=42;
-    ctx.clearRect(0,0,w,h);ctx.fillStyle='#09131d';ctx.fillRect(0,0,w,h);
-    ctx.strokeStyle='#173044';ctx.lineWidth=1;
-    for(let y=0;y<5;y++){const yy=p+y*(h-2*p)/4;ctx.beginPath();ctx.moveTo(p,yy);ctx.lineTo(w-p,yy);ctx.stroke();}
-    function line(data,min,max,color){
-      ctx.strokeStyle=color;ctx.lineWidth=2.5;ctx.beginPath();
-      data.forEach((v,i)=>{const x=p+i*(w-2*p)/(data.length-1);const y=h-p-(v-min)/(max-min)*(h-2*p);i?ctx.lineTo(x,y):ctx.moveTo(x,y)});
-      ctx.stroke();
-    }
-    line(tempSeries,84,94,'#51d7ff');line(levelSeries,50,80,'#7f9cff');
-    ctx.fillStyle='#8fa2b3';ctx.font='12px system-ui';ctx.fillText('Temperature °C',p,20);ctx.fillText('Tank level %',p+120,20);
+function chart(){
+  const w=canvas.width,h=canvas.height,p=44;
+  ctx.clearRect(0,0,w,h);ctx.fillStyle="#08141e";ctx.fillRect(0,0,w,h);
+  ctx.strokeStyle="#173142";ctx.lineWidth=1;
+  for(let y=0;y<5;y++){const yy=p+y*(h-2*p)/4;ctx.beginPath();ctx.moveTo(p,yy);ctx.lineTo(w-p,yy);ctx.stroke()}
+  function line(data,min,max,color){
+    ctx.strokeStyle=color;ctx.lineWidth=2.5;ctx.beginPath();
+    data.forEach((v,i)=>{const x=p+i*(w-2*p)/(data.length-1);const y=h-p-(v-min)/(max-min)*(h-2*p);i?ctx.lineTo(x,y):ctx.moveTo(x,y)});
+    ctx.stroke();
   }
+  line(tempSeries,84,94,"#54d8ff");
+  line(levelSeries,50,82,"#7f99ff");
+  ctx.fillStyle="#8198aa";ctx.font="12px system-ui";
+  ctx.fillText("Temperature °C",p,22);ctx.fillText("Tank Level %",p+130,22);
+}
 
-  function jitter(base,range){return base+(Math.random()-.5)*range}
-  function tick(){
-    const a=jitter(89.2,1.2),b=jitter(88.8,1.2),dirty=jitter(1964,45),clean=jitter(1813,42),flow=jitter(122.5,5),current=jitter(43.8,2.2);
-    ids('tempA').textContent=a.toFixed(1); ids('tempB').textContent=b.toFixed(1);
-    ids('dirtyLevel').textContent=Math.round(dirty).toLocaleString(); ids('cleanLevel').textContent=Math.round(clean).toLocaleString();
-    ids('flow').textContent=flow.toFixed(1); ids('current').textContent=current.toFixed(1);
-    ids('barA').style.width=Math.min(100,a)+'%'; ids('barB').style.width=Math.min(100,b)+'%';
-    ids('barDirty').style.width=Math.min(100,dirty/27)+'%'; ids('barClean').style.width=Math.min(100,clean/27)+'%';
-    ids('barFlow').style.width=Math.min(100,flow/1.6)+'%'; ids('barCurrent').style.width=Math.min(100,current/0.6)+'%';
-    const oee=jitter(91.8,.8),q=jitter(98.6,.3); ids('oee').textContent=oee.toFixed(1)+'%';ids('quality').textContent=q.toFixed(1)+'%';
-    ids('lastUpdate').textContent=new Date().toLocaleTimeString();
-    tempSeries.push(a);tempSeries.shift();levelSeries.push(dirty/27);levelSeries.shift();draw();
-  }
-  draw();tick();setInterval(tick,2000);
+function jitter(base,range){return base+(Math.random()-.5)*range}
+
+function tick(){
+  const a=jitter(89.2,1.0),b=jitter(88.8,1.1),dirty=jitter(1964,55),clean=jitter(1813,48),flow=jitter(122.4,5),current=jitter(43.8,2.0);
+  const oee=jitter(91.8,.7),quality=jitter(98.6,.25);
+
+  $("clock").textContent=new Date().toLocaleTimeString();
+  $("tempA").textContent=a.toFixed(1); $("tempB").textContent=b.toFixed(1);
+  $("flow").textContent=flow.toFixed(1); $("current").textContent=current.toFixed(1);
+
+  $("pTempA").textContent=a.toFixed(1); $("pTempB").textContent=b.toFixed(1);
+  $("dirtyLevel").textContent=Math.round(dirty).toLocaleString();
+  $("cleanLevel").textContent=Math.round(clean).toLocaleString();
+  $("pFlow").textContent=flow.toFixed(1); $("pCurrent").textContent=current.toFixed(1);
+  $("oee").textContent=oee.toFixed(1)+"%"; $("quality").textContent=quality.toFixed(1)+"%";
+
+  $("barA").style.width=Math.min(100,(a-80)/20*100)+"%";
+  $("barB").style.width=Math.min(100,(b-80)/20*100)+"%";
+  $("barDirty").style.width=Math.min(100,dirty/2800*100)+"%";
+  $("barClean").style.width=Math.min(100,clean/2800*100)+"%";
+  $("barFlow").style.width=Math.min(100,(flow-100)/40*100)+"%";
+  $("barCurrent").style.width=Math.min(100,(current-35)/15*100)+"%";
+  $("tankAfill").style.height=Math.min(95,62+(a-88)*4)+"%";
+  $("tankBfill").style.height=Math.min(95,64+(b-88)*4)+"%";
+
+  tempSeries.push(a);tempSeries.shift();
+  levelSeries.push(dirty/28);levelSeries.shift();
+  chart();
+}
+chart();tick();setInterval(tick,2000);
 </script>
 </body>
 </html>
