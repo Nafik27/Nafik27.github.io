@@ -1,0 +1,85 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<meta name="description" content="Production Leadership Command Center — management simulation for production group leaders.">
+<title>Production Leadership Command Center | Muhammad Ilman Nafi</title>
+<style>
+:root{--bg:#07101b;--panel:#0d1a29;--panel2:#102238;--line:#20364e;--text:#eef5fb;--muted:#91a5ba;--cyan:#55d6ff;--green:#63e6a8;--amber:#ffbd5a;--red:#ff6f75;--blue:#7f9cff}
+*{box-sizing:border-box}body{margin:0;background:radial-gradient(circle at 15% 0%,#10304a 0,transparent 32%),linear-gradient(180deg,#07101b,#050b12);color:var(--text);font:14px/1.5 Inter,system-ui,Segoe UI,Arial,sans-serif}button{font:inherit;color:inherit}.app{min-height:100vh}.top{height:68px;border-bottom:1px solid var(--line);display:flex;align-items:center;justify-content:space-between;padding:0 28px;background:rgba(7,16,27,.88);backdrop-filter:blur(12px);position:sticky;top:0;z-index:5}.brand{display:flex;align-items:center;gap:12px}.logo{width:34px;height:34px;border-radius:9px;background:linear-gradient(135deg,var(--cyan),var(--blue));display:grid;place-items:center;color:#07101b;font-weight:900}.brand strong{display:block}.brand small{color:var(--muted)}.shift{display:flex;gap:10px;align-items:center}.pill{padding:7px 11px;border:1px solid var(--line);border-radius:999px;color:var(--muted)}.live{color:var(--green);border-color:#23553f}.layout{display:grid;grid-template-columns:235px 1fr;max-width:1500px;margin:auto}.side{border-right:1px solid var(--line);min-height:calc(100vh - 68px);padding:22px 14px}.side h4{color:#60758c;font-size:10px;letter-spacing:.16em;text-transform:uppercase;margin:15px 10px 9px}.nav{display:block;padding:11px 12px;border-radius:9px;color:var(--muted);margin:3px 0;cursor:pointer}.nav.active,.nav:hover{background:#12263b;color:var(--text)}.nav span{float:right;color:#627990}.main{padding:26px;min-width:0}.headline{display:flex;justify-content:space-between;gap:20px;align-items:end;margin-bottom:22px}.eyebrow{color:var(--cyan);font-size:11px;font-weight:800;letter-spacing:.17em;text-transform:uppercase}.headline h1{font-size:32px;letter-spacing:-.04em;margin:5px 0}.muted{color:var(--muted)}.controls{display:flex;gap:8px;flex-wrap:wrap}.btn{border:1px solid var(--line);background:#0c1826;border-radius:8px;padding:9px 12px;cursor:pointer}.btn:hover{background:#12263b}.btn.primary{border-color:#2d728a;background:#12364a}.kpis{display:grid;grid-template-columns:repeat(6,1fr);gap:12px}.card{background:linear-gradient(180deg,rgba(16,34,56,.9),rgba(10,23,37,.92));border:1px solid var(--line);border-radius:13px;padding:16px}.kpi label{display:block;color:var(--muted);font-size:12px}.kpi strong{display:block;font-size:27px;margin:6px 0 2px;letter-spacing:-.03em}.good{color:var(--green)}.warn{color:var(--amber)}.bad{color:var(--red)}.blue{color:var(--cyan)}.grid{display:grid;grid-template-columns:1.5fr 1fr;gap:14px;margin-top:14px}.section-title{display:flex;justify-content:space-between;align-items:center;margin-bottom:14px}.section-title h2{font-size:16px;margin:0}.badge{font-size:10px;padding:5px 8px;border-radius:999px;background:#16283d;color:#8fb4d1}.people{display:grid;gap:9px}.person{display:grid;grid-template-columns:1fr 85px 100px;gap:10px;align-items:center;padding:11px;border:1px solid #1c3148;border-radius:9px;background:#0a1624}.person b{display:block}.person small{color:var(--muted)}.bar{height:7px;background:#1b2d40;border-radius:99px;overflow:hidden}.fill{height:100%;background:linear-gradient(90deg,var(--cyan),var(--blue));border-radius:99px}.status{font-size:11px;text-align:right}.table{width:100%;border-collapse:collapse}.table th{text-align:left;color:#72869b;font-size:10px;text-transform:uppercase;letter-spacing:.08em;padding:8px;border-bottom:1px solid var(--line)}.table td{padding:11px 8px;border-bottom:1px solid #172a3f}.ring{width:70px;height:70px;border-radius:50%;display:grid;place-items:center;background:conic-gradient(var(--green) 0 91%,#20364b 91%);position:relative}.ring:after{content:"";position:absolute;inset:8px;background:#0c1a29;border-radius:50%}.ring span{position:relative;z-index:1;font-weight:800}.mini-grid{display:grid;grid-template-columns:1fr 1fr;gap:10px}.metric{padding:12px;border:1px solid #1c3148;border-radius:9px}.metric strong{font-size:22px}.actions{display:grid;gap:9px}.action{display:grid;grid-template-columns:8px 1fr auto;gap:10px;align-items:start;padding:10px;border:1px solid #1c3148;border-radius:9px}.priority{width:8px;height:8px;border-radius:50%;margin-top:6px;background:var(--amber)}.priority.high{background:var(--red)}.priority.low{background:var(--green)}.action small{color:var(--muted)}.timeline{display:grid;grid-template-columns:repeat(4,1fr);gap:8px}.phase{padding:11px;border:1px solid #1c3148;border-radius:9px}.phase b{display:block}.phase small{color:var(--muted)}.log{max-height:255px;overflow:auto}.logrow{display:grid;grid-template-columns:70px 75px 1fr;gap:8px;padding:9px 0;border-bottom:1px solid #172a3f;font-size:12px}.tag{font-size:10px;padding:3px 6px;border-radius:5px;background:#172b40;color:#9fb8d0}.footer{color:#627990;text-align:center;padding:30px}.toast{position:fixed;right:22px;bottom:22px;background:#12263b;border:1px solid #31516d;padding:12px 15px;border-radius:9px;display:none;z-index:20}.mobile-only{display:none}
+@media(max-width:1150px){.kpis{grid-template-columns:repeat(3,1fr)}.grid{grid-template-columns:1fr}.side{width:190px}.layout{grid-template-columns:190px 1fr}}
+@media(max-width:760px){.side{display:none}.layout{display:block}.mobile-only{display:block}.main{padding:16px}.top{padding:0 15px}.shift .pill{display:none}.headline{align-items:flex-start;flex-direction:column}.kpis{grid-template-columns:1fr 1fr}.person{grid-template-columns:1fr}.status{text-align:left}.timeline{grid-template-columns:1fr 1fr}}
+</style>
+</head>
+<body>
+<div class="app">
+<header class="top"><div class="brand"><div class="logo">PG</div><div><strong>Production Leadership Command Center</strong><small>Management Simulation · Copper Foil Manufacturing</small></div></div><div class="shift"><span class="pill">Shift B · 14:00–22:00</span><span class="pill live">● LIVE SIMULATION</span></div></header>
+<div class="layout">
+<aside class="side"><h4>Management</h4><div class="nav active">Shift Overview <span>01</span></div><div class="nav">Manpower <span>02</span></div><div class="nav">Production Plan <span>03</span></div><div class="nav">Quality <span>04</span></div><div class="nav">Safety <span>05</span></div><div class="nav">Action Tracker <span>06</span></div><h4>Decision Support</h4><div class="nav">Deviation Review <span>07</span></div><div class="nav">Handover <span>08</span></div><div class="nav">Daily Report <span>09</span></div></aside>
+<main class="main">
+<div class="headline"><div><div class="eyebrow">Production Group Leader · Shift Control</div><h1>Manage the shift, not just the machine.</h1><div class="muted">A management dashboard focused on manpower, target attainment, quality, safety, deviations, and follow-up actions.</div></div><div class="controls"><button class="btn" onclick="toggleSim()">Pause simulation</button><button class="btn primary" onclick="briefing()">Start briefing</button></div></div>
+
+<section class="kpis">
+<div class="card kpi"><label>Shift Output</label><strong id="output">1,248 kg</strong><span class="muted">of 1,300 kg target</span></div>
+<div class="card kpi"><label>Target Attainment</label><strong class="good" id="attain">96.0%</strong><span class="muted">current shift</span></div>
+<div class="card kpi"><label>OEE</label><strong class="good" id="oee">91.8%</strong><span class="muted">A × P × Q</span></div>
+<div class="card kpi"><label>Manpower</label><strong id="mp">5 / 5</strong><span class="muted">operators present</span></div>
+<div class="card kpi"><label>Quality</label><strong class="good">98.5%</strong><span class="muted">within specification</span></div>
+<div class="card kpi"><label>Safety</label><strong class="good">0</strong><span class="muted">recordable incidents</span></div>
+</section>
+
+<div class="grid">
+<section class="card"><div class="section-title"><h2>Manpower & Work Allocation</h2><span class="badge">5 operators</span></div><div class="people">
+<div class="person"><div><b>Operator A</b><small>Dissolution · Tank A</small></div><div class="bar"><div class="fill" style="width:92%"></div></div><div class="status good">Stable</div></div>
+<div class="person"><div><b>Operator B</b><small>Dissolution · Tank B</small></div><div class="bar"><div class="fill" style="width:88%"></div></div><div class="status good">Stable</div></div>
+<div class="person"><div><b>Operator C</b><small>Purification / Filtration</small></div><div class="bar"><div class="fill" style="width:76%"></div></div><div class="status warn">High load</div></div>
+<div class="person"><div><b>Operator D</b><small>Electrolysis / Foil</small></div><div class="bar"><div class="fill" style="width:83%"></div></div><div class="status good">Stable</div></div>
+<div class="person"><div><b>Operator E</b><small>Inspection / Packing</small></div><div class="bar"><div class="fill" style="width:61%"></div></div><div class="status good">Available</div></div>
+</div></section>
+
+<section class="card"><div class="section-title"><h2>Leader Decision Board</h2><span class="badge">Priority queue</span></div><div class="actions">
+<div class="action"><i class="priority high"></i><div><b>High load at filtration</b><small>Rebalance Operator E for 30 min</small></div><button class="btn" onclick="resolve(this)">Assign</button></div>
+<div class="action"><i class="priority"></i><div><b>Temperature deviation</b><small>Verify sensor + request QC retest</small></div><button class="btn" onclick="resolve(this)">Escalate</button></div>
+<div class="action"><i class="priority low"></i><div><b>Shift handover</b><small>Prepare 21:30 handover checklist</small></div><button class="btn" onclick="resolve(this)">Open</button></div>
+</div></section>
+</div>
+
+<div class="grid">
+<section class="card"><div class="section-title"><h2>Production Plan vs Actual</h2><span class="badge">Updated live</span></div><table class="table"><thead><tr><th>Area</th><th>Plan</th><th>Actual</th><th>Attainment</th><th>Status</th></tr></thead><tbody>
+<tr><td>Dissolution</td><td>420 kg</td><td>415 kg</td><td>98.8%</td><td class="good">On plan</td></tr>
+<tr><td>Purification</td><td>420 kg</td><td>408 kg</td><td>97.1%</td><td class="good">On plan</td></tr>
+<tr><td>Electrolysis</td><td>460 kg</td><td>425 kg</td><td>92.4%</td><td class="warn">Watch</td></tr>
+</tbody></table></section>
+<section class="card"><div class="section-title"><h2>Shift Health</h2><span class="badge">Leader view</span></div><div style="display:flex;gap:20px;align-items:center"><div class="ring"><span>91%</span></div><div class="mini-grid" style="flex:1"><div class="metric"><small class="muted">Availability</small><strong class="good">96%</strong></div><div class="metric"><small class="muted">Performance</small><strong>95%</strong></div><div class="metric"><small class="muted">Quality</small><strong>98.5%</strong></div><div class="metric"><small class="muted">Downtime</small><strong class="warn">21 min</strong></div></div></div></section>
+</div>
+
+<div class="grid">
+<section class="card"><div class="section-title"><h2>Management Cycle</h2><span class="badge">PDCA</span></div><div class="timeline">
+<div class="phase"><b>Plan</b><small>Target 1,300 kg<br>Manpower 5</small></div>
+<div class="phase"><b>Do</b><small>Monitor DCS<br>Coach operators</small></div>
+<div class="phase"><b>Check</b><small>Compare actual<br>Review deviations</small></div>
+<div class="phase"><b>Act</b><small>Corrective action<br>Handover</small></div>
+</div></section>
+<section class="card"><div class="section-title"><h2>Safety & Quality Gate</h2><span class="badge">Mandatory</span></div><div class="mini-grid"><div class="metric"><small class="muted">PPE compliance</small><strong class="good">100%</strong></div><div class="metric"><small class="muted">Open quality issue</small><strong class="warn">1</strong></div><div class="metric"><small class="muted">Near miss</small><strong>0</strong></div><div class="metric"><small class="muted">SOP deviation</small><strong class="good">0</strong></div></div></section>
+</div>
+
+<section class="card" style="margin-top:14px"><div class="section-title"><h2>Leader Activity & Escalation Log</h2><span class="badge">Latest events</span></div><div class="log" id="log">
+<div class="logrow"><span class="muted">14:18</span><span class="tag">MANPOWER</span><span>Operator C load reached 76%; leader review triggered.</span></div>
+<div class="logrow"><span class="muted">14:07</span><span class="tag">PROCESS</span><span>Tank B temperature stabilized at 89.1 °C after adjustment.</span></div>
+<div class="logrow"><span class="muted">13:58</span><span class="tag">QUALITY</span><span>Sampling request sent to QC for current-density deviation.</span></div>
+<div class="logrow"><span class="muted">13:45</span><span class="tag">SAFETY</span><span>Shift PPE and chemical-handling briefing completed.</span></div>
+</div></section>
+<div class="footer">Portfolio project · Production Leadership Command Center · Simulated data for demonstration</div>
+</main></div></div>
+<div class="toast" id="toast"></div>
+<script>
+let running=true,kg=1248,sec=0;
+function toast(t){const x=document.getElementById('toast');x.textContent=t;x.style.display='block';clearTimeout(window.tt);window.tt=setTimeout(()=>x.style.display='none',2200)}
+function toggleSim(){running=!running;event.target.textContent=running?'Pause simulation':'Resume simulation';toast(running?'Simulation resumed':'Simulation paused')}
+function briefing(){toast('Shift briefing checklist opened: target → manpower → safety → quality → deviations → handover')}
+function resolve(b){b.textContent='Done';b.disabled=true;b.parentElement.style.opacity='.55';toast('Action recorded in leader log')}
+setInterval(()=>{if(!running)return;sec++;if(sec%4===0){kg=Math.min(1300,kg+1);document.getElementById('output').textContent=kg+' kg';document.getElementById('attain').textContent=(kg/1300*100).toFixed(1)+'%';}},1000)
+</script>
+</body>
+</html>
