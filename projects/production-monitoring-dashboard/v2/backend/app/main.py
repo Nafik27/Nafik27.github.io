@@ -1,4 +1,5 @@
 import asyncio
+import os
 from contextlib import asynccontextmanager
 from fastapi import FastAPI, HTTPException, WebSocket, WebSocketDisconnect
 from fastapi.middleware.cors import CORSMiddleware
@@ -16,21 +17,35 @@ async def lifespan(app: FastAPI):
 
 app = FastAPI(
     title="Industrial Production Monitoring API",
-    version="2.0.0",
+    version="2.1.0",
     lifespan=lifespan,
 )
 
+frontend_origin = os.getenv("FRONTEND_ORIGIN", "*")
+allowed_origins = ["*"] if frontend_origin == "*" else [
+    origin.strip() for origin in frontend_origin.split(",") if origin.strip()
+]
+
 app.add_middleware(
     CORSMiddleware,
-    allow_origins=["*"],
+    allow_origins=allowed_origins,
     allow_credentials=False,
     allow_methods=["*"],
     allow_headers=["*"],
 )
 
+@app.get("/")
+def root():
+    return {
+        "service": "Industrial Production Monitoring API",
+        "version": "2.1.0",
+        "docs": "/docs",
+        "health": "/api/health",
+    }
+
 @app.get("/api/health")
 def health():
-    return {"status": "ok", "service": "production-monitoring-api", "version": "2.0.0"}
+    return {"status": "ok", "service": "production-monitoring-api", "version": "2.1.0"}
 
 @app.get("/api/current")
 def current():
